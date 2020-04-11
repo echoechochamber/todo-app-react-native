@@ -4,7 +4,6 @@ import { v4 as uuid4 } from "uuid";
 export default class TodoController {
   constructor(shouldPersist) {
     this.persistent = !!shouldPersist;
-    console.log(this.persistent)
     this.todos = JSON.parse(fs.readFileSync("todos.json", "utf8"));
   }
 
@@ -17,7 +16,6 @@ export default class TodoController {
   }
 
   addTodo({ description, done, due }) {
-    /*TODO: add test for filling when data is null*/
     const newTodo = {
       id: uuid4(),
       due: !!due ? due : Date.now(),

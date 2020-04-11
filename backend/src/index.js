@@ -28,7 +28,6 @@ app.patch("/todos/:id/complete", (req, res) => {
 
 app.delete("/todos/:id", (req, res) => {
 	const updatedTodos = controller.deleteTodo(req.params.id);
-	console.log(updatedTodos)
 	res.json(updatedTodos);
 });
 
