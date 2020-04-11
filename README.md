@@ -8,3 +8,6 @@ by Allen K Williams
 # Running the API
 1. Navigate to backend `cd backend`
 2. `yarn start` / `npm run start`
+if you would like for the app to write to the `todos.json` file, instead, run `yarn start:persist`
+
+
