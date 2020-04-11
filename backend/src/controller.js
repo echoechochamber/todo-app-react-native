@@ -2,22 +2,22 @@ import fs from "fs";
 import { v4 as uuid4 } from "uuid";
 
 export default class TodoController {
-  constructor(shouldPersist = false) {
-    this.persistent = shouldPersist;
+  constructor(shouldPersist) {
+    this.persistent = !!shouldPersist;
+    console.log(this.persistent)
     this.todos = JSON.parse(fs.readFileSync("todos.json", "utf8"));
   }
 
-  getTodos() {
-    return this.todos;
+  getTodos(id) {
+    if (!!id) {
+      return this.todos.find(val => val.id === id);
+    } else {
+      return this.todos;
+    }
   }
 
-  /**
-   *
-   * @param due
-   * @param description
-   * @param done
-   */
   addTodo({ description, done, due }) {
+    /*TODO: add test for filling when data is null*/
     const newTodo = {
       id: uuid4(),
       due: !!due ? due : Date.now(),
@@ -41,12 +41,12 @@ export default class TodoController {
   }
 
   deleteTodo(id) {
-  	const index = this.todos.findIndex(val => val.id === id);
-  	this.todos.splice(index, 1);
-	  if (this.persistent) {
-		  this.writeToFile(this.todos);
-	  }
-	  return this.todos;
+    const index = this.todos.findIndex(val => val.id === id);
+    this.todos.splice(index, 1);
+    if (this.persistent) {
+      this.writeToFile(this.todos);
+    }
+    return this.todos;
   }
 
   writeToFile(data) {

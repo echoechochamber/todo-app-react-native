@@ -5,9 +5,9 @@
   "main": "./src/index.js",
   "scripts": {
     "build": "./node_modules/.bin/babel-node src --out-dir dist",
-    "start": "npm run build && node dist/index.js false",
-    "start:persist": "npm run build && node dist/index.js true",
-    "dev": "nodemon --watch src --exec babel-node src/index.js false",
+    "start": "npm run build && node dist/index.js 0",
+    "start:persist": "npm run build && node dist/index.js 1",
+    "dev": "nodemon --watch src --exec babel-node src/index.js 0",
     "test": "jest"
   },
   "author": "",
