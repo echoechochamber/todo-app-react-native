@@ -14,7 +14,7 @@ export function requestTodos() {
 /* LOAD TODOS */
 export const RECEIVE_TODOS = "RECEIVE_TODOS";
 export function receiveTodos(todos) {
-  return { TYPE: RECEIVE_TODOS, todos };
+  return { type: RECEIVE_TODOS, todos };
 }
 // thunk to load todos
 export function fetchTodos() {
@@ -22,7 +22,7 @@ export function fetchTodos() {
     dispatch(requestTodos());
     return axios.get(endpoint + "/todos").then(
       response => {
-        dispatch(receiveTodos(response));
+        dispatch(receiveTodos(response.data));
       },
       err => console.log(err)
     );
@@ -35,7 +35,7 @@ export function addTodo(data) {
     dispatch(requestTodos());
     return axios.post(`${endpoint}/todos`, data).then(
       response => {
-        dispatch(receiveTodos(response));
+        dispatch(receiveTodos(response.data));
       },
       err => console.log(err)
     );
@@ -48,7 +48,7 @@ export function completeTodo({ id }) {
     dispatch(requestTodos());
     return axios.patch(`${endpoint}/todos/${id}/complete`, {}).then(
       response => {
-        dispatch(receiveTodos(response));
+        dispatch(receiveTodos(response.data));
       },
       err => console.log(err)
     );
@@ -61,20 +61,20 @@ export function deleteTodo({ id }) {
     dispatch(requestTodos());
     return axios.delete(`${endpoint}/todos/${id}`).then(
       response => {
-        dispatch(receiveTodos(response));
+        dispatch(receiveTodos(response.data));
       },
       err => console.log(err)
     );
   };
 }
 
-// initial state of the app 
+// initial state of the app
 const initialState = {
   todos: [],
   modalOpen: false,
   inFlight: false
 };
-export default function TodosReducer(state = initialState, action) {
+export default function todosReducer(state = initialState, action) {
   switch (action.type) {
     case REQUEST_IN_FLIGHT:
       return { ...state, inFlight: true };
